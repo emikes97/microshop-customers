@@ -54,22 +54,64 @@ public class JdbcCustomerRepository implements CustomerRepository {
 
     @Override
     public Customer insert(Customer customer) {
-        return null;
+        Customer inserted = jdbc.queryForObject(CustomerSql.INSERT_CUSTOMER, mapper,
+                customer.getCustomerId(),
+                customer.getUsername(),
+                customer.getPasswordHash(),
+                customer.getPhoneNumber(),
+                customer.getEmail(),
+                customer.getCustomerName(),
+                customer.getCustomerSurname(),
+                customer.getSubscribedAt(),
+                customer.getSubscribedValidUntilAt(),
+                customer.getVersion(),
+                customer.getStatus().name(),
+                customer.getCreatedAt(),
+                customer.getUpdatedAt(),
+                customer.getPasswordChangedAt(),
+                customer.getDeletedAt());
+
+        if (inserted == null){
+            throw new IllegalStateException("Insert returned null for customer: " + customer.getCustomerId());
+        }
+        return inserted;
     }
 
     @Override
     public boolean updateProfile(Customer customer, int expectedVersion) {
-        return false;
+
+        int rows = jdbc.update(CustomerSql.UPDATE_CUSTOMER,
+                customer.getUsername(),
+                customer.getPhoneNumber(),
+                customer.getEmail(),
+                customer.getCustomerName(),
+                customer.getCustomerSurname(),
+                customer.getCustomerId(),
+                expectedVersion);
+
+        return rows == 1;
     }
 
     @Override
     public boolean updateStatus(UUID customerId, AccountStatus status, int expectedVersion) {
-        return false;
+
+        int rows = jdbc.update(CustomerSql.UPDATE_STATUS,
+                status.name(),
+                customerId,
+                expectedVersion);
+
+        return rows == 1;
     }
 
     @Override
     public boolean updatePassword(UUID customerId, String newHashedPassword, int expectedVersion) {
-        return false;
+
+        int rows = jdbc.update(CustomerSql.UPDATE_PASSWORD,
+                newHashedPassword,
+                customerId,
+                expectedVersion);
+
+        return rows == 1;
     }
 
     // == Private Methods ==

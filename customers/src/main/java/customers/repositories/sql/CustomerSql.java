@@ -29,4 +29,63 @@ public final class CustomerSql {
             WHERE
             phone_number = ?
             """;
+
+    public static final String INSERT_CUSTOMER = """
+            INSERT INTO customers (
+                customer_id,
+                username,
+                password_hash,
+                phone_number,
+                email,
+                customer_name,
+                customer_surname,
+                subscribed_at,
+                subscribed_valid_until_at,
+                version,
+                status,
+                created_at,
+                updated_at,
+                password_changed_at,
+                deleted_at
+            )
+            VALUES (
+                ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?
+            )
+            RETURNING *
+            """;
+
+    public static final String UPDATE_CUSTOMER = """
+            UPDATE customers
+            SET
+                username = ?,
+                phone_number = ?,
+                email = ?,
+                customer_name = ?,
+                customer_surname = ?,
+                updated_at = now(),
+                version = version + 1
+            WHERE customer_id = ?
+              AND version = ?;
+            """;
+
+    public static final String UPDATE_STATUS = """
+            UPDATE customers
+            SET
+                status = ?,
+                updated_at = now()
+                version = version + 1
+            WHERE customer_id = ?
+            AND version = ?
+            """;
+
+    public static final String UPDATE_PASSWORD = """
+            UPDATE customers
+            SET
+                password_hash = ?,
+                password_changed_at = now(),
+                updated_at = now(),
+                version = version + 1
+            WHERE customer_id = ?
+            AND version = ?
+            """;
 }
