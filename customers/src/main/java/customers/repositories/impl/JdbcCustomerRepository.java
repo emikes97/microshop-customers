@@ -61,14 +61,7 @@ public class JdbcCustomerRepository implements CustomerRepository {
                 customer.getEmail(),
                 customer.getCustomerName(),
                 customer.getCustomerSurname(),
-                customer.getSubscribedAt(),
-                customer.getSubscribedValidUntilAt(),
-                customer.getVersion(),
-                customer.getStatus().name(),
-                customer.getCreatedAt(),
-                customer.getUpdatedAt(),
-                customer.getPasswordChangedAt(),
-                customer.getDeletedAt());
+                customer.getStatus().name());
 
         if (inserted == null){
             throw new IllegalStateException("Insert returned null for customer: " + customer.getCustomerId());

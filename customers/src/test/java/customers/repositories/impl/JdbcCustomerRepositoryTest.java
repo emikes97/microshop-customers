@@ -76,14 +76,7 @@ class JdbcCustomerRepositoryTest {
         String email = "e@e.com";
         String customerName = "name";
         String customerSurname = "surname";
-        OffsetDateTime subscribedAt = null;
-        OffsetDateTime subscribedValidUntilAt = null;
-        int version = 0;
         AccountStatus status = AccountStatus.ACTIVE;
-        OffsetDateTime createdAt = null;
-        OffsetDateTime updatedAt = null;
-        OffsetDateTime passwordChangedAt = null;
-        OffsetDateTime deletedAt = null;
 
         when(input.getCustomerId()).thenReturn(customerId);
         when(input.getUsername()).thenReturn(username);
@@ -92,21 +85,13 @@ class JdbcCustomerRepositoryTest {
         when(input.getEmail()).thenReturn(email);
         when(input.getCustomerName()).thenReturn(customerName);
         when(input.getCustomerSurname()).thenReturn(customerSurname);
-        when(input.getSubscribedAt()).thenReturn(subscribedAt);
-        when(input.getSubscribedValidUntilAt()).thenReturn(subscribedValidUntilAt);
-        when(input.getVersion()).thenReturn(version);
         when(input.getStatus()).thenReturn(status);
-        when(input.getCreatedAt()).thenReturn(createdAt);
-        when(input.getUpdatedAt()).thenReturn(updatedAt);
-        when(input.getPasswordChangedAt()).thenReturn(passwordChangedAt);
-        when(input.getDeletedAt()).thenReturn(deletedAt);
 
-        // IMPORTANT: if you use matchers in this stub, ALL args must be matchers
+        // Stub: now only 8 args after mapper
         when(jdbc.queryForObject(
                 eq(CustomerSql.INSERT_CUSTOMER),
                 same(mapper),
-                any(), any(), any(), any(), any(), any(), any(), any(),
-                any(), any(), any(), any(), any(), any(), any()
+                any(), any(), any(), any(), any(), any(), any(), any()
         )).thenReturn(inserted);
 
         // Act
@@ -115,7 +100,7 @@ class JdbcCustomerRepositoryTest {
         // Assert
         assertSame(inserted, result);
 
-        // Strict verify: ALL args are matchers (eq/same) and use locals, not input.getX() calls
+        // Verify: exact 8 args
         verify(jdbc).queryForObject(
                 eq(CustomerSql.INSERT_CUSTOMER),
                 same(mapper),
@@ -126,14 +111,7 @@ class JdbcCustomerRepositoryTest {
                 eq(email),
                 eq(customerName),
                 eq(customerSurname),
-                eq(subscribedAt),
-                eq(subscribedValidUntilAt),
-                eq(version),
-                eq(status.name()),
-                eq(createdAt),
-                eq(updatedAt),
-                eq(passwordChangedAt),
-                eq(deletedAt)
+                eq(status.name())
         );
 
         verifyNoMoreInteractions(jdbc);
@@ -141,39 +119,34 @@ class JdbcCustomerRepositoryTest {
 
     @Test
     void insert_throws_whenInsertReturnedNull() {
+        // Arrange
         Customer input = mock(Customer.class);
+
         UUID customerId = UUID.randomUUID();
         when(input.getCustomerId()).thenReturn(customerId);
-
-        // you must stub all getters used, or use lenient() / any() matcher approach
         when(input.getUsername()).thenReturn("u");
         when(input.getPasswordHash()).thenReturn("hash");
         when(input.getPhoneNumber()).thenReturn("phone");
         when(input.getEmail()).thenReturn("e@e.com");
         when(input.getCustomerName()).thenReturn("name");
         when(input.getCustomerSurname()).thenReturn("surname");
-        when(input.getSubscribedAt()).thenReturn(null);
-        when(input.getSubscribedValidUntilAt()).thenReturn(null);
-        when(input.getVersion()).thenReturn(0);
         when(input.getStatus()).thenReturn(AccountStatus.ACTIVE);
-        when(input.getCreatedAt()).thenReturn(null);
-        when(input.getUpdatedAt()).thenReturn(null);
-        when(input.getPasswordChangedAt()).thenReturn(null);
-        when(input.getDeletedAt()).thenReturn(null);
 
         when(jdbc.queryForObject(
                 eq(CustomerSql.INSERT_CUSTOMER),
                 same(mapper),
-                any(), any(), any(), any(), any(), any(), any(), any(), any(), any(), any(), any(), any(), any(), any()
+                any(), any(), any(), any(), any(), any(), any(), any()
         )).thenReturn(null);
 
-        IllegalStateException ex = assertThrows(IllegalStateException.class, () -> repository.insert(input));
+        // Act + Assert
+        IllegalStateException ex =
+                assertThrows(IllegalStateException.class, () -> repository.insert(input));
         assertTrue(ex.getMessage().contains("Insert returned null"));
 
         verify(jdbc).queryForObject(
                 eq(CustomerSql.INSERT_CUSTOMER),
                 same(mapper),
-                any(), any(), any(), any(), any(), any(), any(), any(), any(), any(), any(), any(), any(), any(), any()
+                any(), any(), any(), any(), any(), any(), any(), any()
         );
         verifyNoMoreInteractions(jdbc);
     }

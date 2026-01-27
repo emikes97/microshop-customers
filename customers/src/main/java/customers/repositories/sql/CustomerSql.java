@@ -49,7 +49,7 @@ public final class CustomerSql {
                 deleted_at
             )
             VALUES (
-                ?, ?, ?, ?, ?, ?, ?, null, null, 0, ?, now(), now(), null, null
+                ?, ?, ?, ?, ?, ?, ?, null, null, 0, ?::account_status, now(), now(), null, null
             )
             RETURNING *
             """;
@@ -71,7 +71,7 @@ public final class CustomerSql {
     public static final String UPDATE_STATUS = """
             UPDATE customers
             SET
-                status = ?,
+                status = ?::account_status,
                 updated_at = now()
                 version = version + 1
             WHERE customer_id = ?

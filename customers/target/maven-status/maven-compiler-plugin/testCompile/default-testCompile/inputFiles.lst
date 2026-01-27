@@ -1,0 +1,6 @@
+/home/mike/gitHubRepos/Microshop/microshop-customers/customers/src/test/java/customers/service/customer/factory/CustomerFactoryTest.java
+/home/mike/gitHubRepos/Microshop/microshop-customers/customers/src/test/java/customers/service/customer/commands/CreateNewCustomerTest.java
+/home/mike/gitHubRepos/Microshop/microshop-customers/customers/src/test/java/customers/service/customer/writer/CustomerWriterTest.java
+/home/mike/gitHubRepos/Microshop/microshop-customers/customers/src/test/java/customers/service/customer/queries/CustomerQueriesTest.java
+/home/mike/gitHubRepos/Microshop/microshop-customers/customers/src/test/java/customers/repositories/impl/JdbcCustomerRepositoryTest.java
+/home/mike/gitHubRepos/Microshop/microshop-customers/customers/src/test/java/customers/service/customer/commands/UpdateCustomerInformationTest.java

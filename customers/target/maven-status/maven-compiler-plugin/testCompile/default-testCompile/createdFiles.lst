@@ -1,0 +1,6 @@
+customers/repositories/impl/JdbcCustomerRepositoryTest.class
+customers/service/customer/queries/CustomerQueriesTest.class
+customers/service/customer/commands/UpdateCustomerInformationTest.class
+customers/service/customer/commands/CreateNewCustomerTest.class
+customers/service/customer/factory/CustomerFactoryTest.class
+customers/service/customer/writer/CustomerWriterTest.class
