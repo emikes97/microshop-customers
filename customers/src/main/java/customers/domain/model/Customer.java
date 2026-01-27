@@ -49,6 +49,16 @@ public class Customer {
         this.deletedAt = deletedAt;
     }
 
+    public Customer(UUID customerId, String username, String passwordHash, String phoneNumber, String email, String customerName, String customerSurname){
+        this.customerId = customerId;
+        this.username = username.trim();
+        this.passwordHash = passwordHash;
+        this.phoneNumber = phoneNumber.trim();
+        this.email = email.trim();
+        this.customerName = customerName.trim();
+        this.customerSurname = customerSurname.trim();
+    }
+
     // == Public Methods ==
 
     @Override
