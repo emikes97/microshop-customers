@@ -49,7 +49,7 @@ public final class CustomerSql {
                 deleted_at
             )
             VALUES (
-                ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?
+                ?, ?, ?, ?, ?, ?, ?, null, null, 0, ?, now(), now(), null, null
             )
             RETURNING *
             """;
