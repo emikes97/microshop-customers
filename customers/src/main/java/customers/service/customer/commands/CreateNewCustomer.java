@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class CreateNewUser {
+public class CreateNewCustomer {
 
     // == Fields ==
     private final CustomerFactory factory;
@@ -17,7 +17,7 @@ public class CreateNewUser {
 
     // == Constructors ==
     @Autowired
-    public CreateNewUser(CustomerFactory factory, CustomerWriter writer) {
+    public CreateNewCustomer(CustomerFactory factory, CustomerWriter writer) {
         this.factory = factory;
         this.writer = writer;
     }
@@ -25,8 +25,8 @@ public class CreateNewUser {
     // == Public Methods ==
 
     public DTOCustomerProfileCreatedResponse handle(DTOCustomerNewProfile dto){
-
         Customer customerToSave = factory.create(dto);
         Customer savedCustomer = writer.insertNewUser(customerToSave);
+        return new DTOCustomerProfileCreatedResponse(savedCustomer.getCustomerId(), savedCustomer.getUsername(), savedCustomer.getCustomerName());
     }
 }

@@ -22,4 +22,8 @@ public class CustomerWriter {
     public Customer insertNewUser(Customer customer){
         return customerRepository.insert(customer);
     }
+
+    public void updateCustomer(Customer customer, int expectedVersion){
+        customerRepository.updateProfile(customer, expectedVersion);
+    }
 }

@@ -29,7 +29,6 @@ public class JdbcCustomerRepository implements CustomerRepository {
         this.mapper = mapper;
     }
 
-
     // == Public - Implemented Methods ==
 
     @Override
