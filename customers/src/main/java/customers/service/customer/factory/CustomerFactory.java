@@ -31,35 +31,18 @@ public class CustomerFactory {
     }
 
     public Customer updateCustomer(Customer customer, DTOCustomerUpdateProfile dto){
-
-        String newCustomerName = "";
-        String newCustomerSurname = "";
-        String newEmail = "";
-        String newPhoneNumber = "";
-        String newUserName = "";
-
-        if(dto.customerName() != null){
-            newCustomerName = dto.customerName().trim();
-        }
-        if(dto.customerSurname() != null){
-            newCustomerSurname = dto.customerSurname().trim();
-        }
-        if(dto.email() != null){
-            newEmail = dto.email().trim();
-        }
-        if(dto.phoneNumber() != null){
-            newPhoneNumber = dto.phoneNumber().trim();
-        }
-        if(dto.username() != null){
-            newUserName = dto.username().trim();
-        }
-
         return new Customer(customer.getCustomerId(),
-                newUserName.isBlank() ? customer.getUsername() : newUserName,
+                keepOldIfBlank(dto.username(), customer.getUsername()),
                 customer.getPasswordHash(),
-                newPhoneNumber.isBlank() ? customer.getPhoneNumber() : newPhoneNumber,
-                newEmail.isBlank() ? customer.getEmail() : newEmail,
-                newCustomerName.isBlank() ? customer.getCustomerName() : newCustomerName,
-                newCustomerSurname.isBlank() ? customer.getCustomerSurname() : newCustomerSurname);
+                keepOldIfBlank(dto.phoneNumber(), customer.getPhoneNumber()),
+                keepOldIfBlank(dto.email(), customer.getEmail()),
+                keepOldIfBlank(dto.customerName(), customer.getCustomerName()),
+                keepOldIfBlank(dto.customerSurname(), customer.getCustomerSurname()));
+    }
+    
+    private String keepOldIfBlank(String incoming, String current){
+        if(incoming == null) return current;
+        if(incoming.trim().isBlank()) return current;
+        return incoming.trim();
     }
 }

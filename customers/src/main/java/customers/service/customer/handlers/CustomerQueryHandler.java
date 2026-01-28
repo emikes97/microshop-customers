@@ -22,24 +22,29 @@ public class CustomerQueryHandler {
     }
 
     // == Public Methods ==
+
+    // Input goes via priority, if multiple parameters are given only one will be utilized.
     @Transactional(readOnly = true)
-    public DTOCustomerProfileResponse getById(UUID customerId) {
+    public DTOCustomerProfileResponse searchCustomer(UUID customerId, String email, String phoneNumber, String username){
+
+        if(customerId != null)
+            return customerQueries.id(customerId);
+
+        if(username != null)
+            return customerQueries.username(username);
+
+        if(email != null)
+            return customerQueries.email(email);
+
+        if(phoneNumber != null)
+            return customerQueries.phoneNumber(phoneNumber);
+
+        throw new IllegalArgumentException("No parameter was provided");
+    }
+
+    @Transactional(readOnly = true)
+    public DTOCustomerProfileResponse findCustomer(UUID customerId){
         return customerQueries.id(customerId);
-    }
-
-    @Transactional(readOnly = true)
-    public DTOCustomerProfileResponse getByUsername(String username) {
-        return customerQueries.username(username);
-    }
-
-    @Transactional(readOnly = true)
-    public DTOCustomerProfileResponse getByEmail(String email) {
-        return customerQueries.email(email);
-    }
-
-    @Transactional(readOnly = true)
-    public DTOCustomerProfileResponse getByPhoneNumber(String phoneNumber) {
-        return customerQueries.phoneNumber(phoneNumber);
     }
 
     // == Internal Use for Customer Microservice directly ==

@@ -1,8 +1,10 @@
 package customers.service.customer.handlers;
 
 import customers.service.customer.commands.CreateNewCustomer;
+import customers.service.customer.commands.UpdateCustomerCredentials;
 import customers.service.customer.commands.UpdateCustomerInformation;
 import customers.web.DTO.Requests.Customer.DTOCustomerNewProfile;
+import customers.web.DTO.Requests.Customer.DTOCustomerUpdateCredentials;
 import customers.web.DTO.Requests.Customer.DTOCustomerUpdateProfile;
 import customers.web.DTO.Responses.DTOCustomerProfileCreatedResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,12 +19,14 @@ public class CustomerCommandHandler {
     // == Fields ==
     private final CreateNewCustomer createNewCustomer;
     private final UpdateCustomerInformation updateCustomerInformation;
+    private final UpdateCustomerCredentials updateCustomerCredentials;
 
     // == Constructors ==
     @Autowired
-    public CustomerCommandHandler(CreateNewCustomer createNewCustomer, UpdateCustomerInformation updateCustomerInformation) {
+    public CustomerCommandHandler(CreateNewCustomer createNewCustomer, UpdateCustomerInformation updateCustomerInformation, UpdateCustomerCredentials updateCustomerCredentials) {
         this.createNewCustomer = createNewCustomer;
         this.updateCustomerInformation = updateCustomerInformation;
+        this.updateCustomerCredentials = updateCustomerCredentials;
     }
 
     @Transactional
@@ -33,5 +37,10 @@ public class CustomerCommandHandler {
     @Transactional
     public void updateCustomer(UUID customerId, DTOCustomerUpdateProfile dto){
         updateCustomerInformation.handle(customerId, dto);
+    }
+
+    @Transactional
+    public void updateCredentials(UUID customerId, DTOCustomerUpdateCredentials dto){
+        updateCustomerCredentials.updateCredentials(customerId, dto);
     }
 }

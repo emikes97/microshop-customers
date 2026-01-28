@@ -72,7 +72,7 @@ public final class CustomerSql {
             UPDATE customers
             SET
                 status = ?::account_status,
-                updated_at = now()
+                updated_at = now(),
                 version = version + 1
             WHERE customer_id = ?
             AND version = ?

@@ -5,6 +5,8 @@ import customers.repositories.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.UUID;
+
 @Component
 public class CustomerWriter {
 
@@ -25,5 +27,9 @@ public class CustomerWriter {
 
     public void updateCustomer(Customer customer, int expectedVersion){
         customerRepository.updateProfile(customer, expectedVersion);
+    }
+
+    public boolean updateCredentials(UUID customerId, String hashedPassword, int expectedVersion){
+        return customerRepository.updatePassword(customerId, hashedPassword, expectedVersion);
     }
 }
