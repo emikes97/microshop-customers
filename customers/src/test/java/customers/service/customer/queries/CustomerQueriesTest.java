@@ -2,7 +2,7 @@ package customers.service.customer.queries;
 
 import customers.domain.model.Customer;
 import customers.repositories.CustomerRepository;
-import customers.web.DTO.Responses.DTOCustomerProfileResponse;
+import customers.web.DTO.Responses.Customer.DTOCustomerProfileResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

@@ -1,11 +1,10 @@
 package customers.service.customer.commands;
 
 import customers.domain.model.Customer;
-import customers.service.customer.commands.CreateNewCustomer;
 import customers.service.customer.factory.CustomerFactory;
 import customers.service.customer.writer.CustomerWriter;
 import customers.web.DTO.Requests.Customer.DTOCustomerNewProfile;
-import customers.web.DTO.Responses.DTOCustomerProfileCreatedResponse;
+import customers.web.DTO.Responses.Customer.DTOCustomerProfileCreatedResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

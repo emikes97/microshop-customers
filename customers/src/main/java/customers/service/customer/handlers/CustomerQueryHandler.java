@@ -2,7 +2,7 @@ package customers.service.customer.handlers;
 
 import customers.domain.model.Customer;
 import customers.service.customer.queries.CustomerQueries;
-import customers.web.DTO.Responses.DTOCustomerProfileResponse;
+import customers.web.DTO.Responses.Customer.DTOCustomerProfileResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

@@ -4,7 +4,7 @@ import customers.domain.model.Customer;
 import customers.service.customer.factory.CustomerFactory;
 import customers.service.customer.writer.CustomerWriter;
 import customers.web.DTO.Requests.Customer.DTOCustomerNewProfile;
-import customers.web.DTO.Responses.DTOCustomerProfileCreatedResponse;
+import customers.web.DTO.Responses.Customer.DTOCustomerProfileCreatedResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

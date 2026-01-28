@@ -29,7 +29,7 @@ public class UpdateCustomerCredentials {
     }
 
     // == Public Methods ==
-    public void updateCredentials(UUID customerId, DTOCustomerUpdateCredentials dto) {
+    public void handle(UUID customerId, DTOCustomerUpdateCredentials dto) {
 
         Customer customer = customerQueryHandler.getCustomer(customerId);
 

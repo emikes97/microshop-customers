@@ -1,4 +1,4 @@
-package customers.web.DTO.Responses;
+package customers.web.DTO.Responses.Customer;
 
 import java.util.UUID;
 
