@@ -95,4 +95,20 @@ public class JdbcCustomerAddressRepository implements CustomerAddressRepository 
 
         return new PageResult<>(content, page, limit, totalElements);
     }
+
+    @Override
+    public boolean setDefaultToFalse(UUID customerId) {
+
+        int row = jdbc.update(CustomerAddressSql.SET_DEFAULT_ADDRESS_TO_FALSE, customerId);
+
+        return row == 1;
+    }
+
+    @Override
+    public boolean setNewDefault(UUID customerId, long addressId, int expectedVersion) {
+
+        int row = jdbc.update(CustomerAddressSql.SET_ADDRESS_TO_DEFAULT, customerId, addressId, expectedVersion);
+
+        return row == 1;
+    }
 }

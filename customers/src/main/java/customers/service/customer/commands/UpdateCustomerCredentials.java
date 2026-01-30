@@ -32,16 +32,18 @@ public class UpdateCustomerCredentials {
     public void handle(UUID customerId, DTOCustomerUpdateCredentials dto) {
 
         Customer customer = customerQueryHandler.getCustomer(customerId);
-
-        if(!encoder.matches(dto.oldPassword(), customer.getPasswordHash()))
-            throw new BadCredentialsException("Error: Invalid current password");
-
-        if(encoder.matches(dto.newPassword(), customer.getPasswordHash()))
-            throw new ValidationException("Error: New password must be different");
-
+        validatePassword(dto.oldPassword(), dto.newPassword(), customer);
         String newHashedPassword = encoder.encode(dto.newPassword());
 
         if(!customerWriter.updateCredentials(customerId, newHashedPassword, customer.getVersion()))
             throw new IllegalStateException("Stale version: customer was updated by another request");
+    }
+
+    private void validatePassword(String oldPassword, String newPassword, Customer customer){
+        if(!encoder.matches(oldPassword, customer.getPasswordHash()))
+            throw new BadCredentialsException("Error: Invalid current password");
+
+        if(encoder.matches(newPassword, customer.getPasswordHash()))
+            throw new ValidationException("Error: New password must be different");
     }
 }

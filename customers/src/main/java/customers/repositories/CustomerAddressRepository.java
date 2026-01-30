@@ -14,6 +14,8 @@ public interface CustomerAddressRepository {
     public boolean updateExistingAddress(DTOCustomerAddressUpdateAddress dto, long addressId, UUID customerId, int expectedVersion);
     public boolean setNewDefaultAddress(UUID customerId, long addressId);
     public boolean deleteAddress(UUID customerId, long addressId, int expectedVersion);
+    public boolean setDefaultToFalse(UUID customerId);
+    public boolean setNewDefault(UUID customerId, long addressId, int expectedVersion);
 
     // SQL queries
     public CustomerAddress getCustomerAddress(UUID customerId, long addressId);

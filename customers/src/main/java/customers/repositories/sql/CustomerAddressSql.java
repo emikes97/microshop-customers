@@ -61,6 +61,27 @@ public class CustomerAddressSql {
               );
             """;
 
+    public static final String SET_DEFAULT_ADDRESS_TO_FALSE = """
+            UPDATE customer_addresses
+            SET
+              is_default = false,
+              version = version + 1,
+              updated_at = now()
+            WHERE customer_id = ?
+            AND is_default = true
+            """;
+
+    public static final String SET_ADDRESS_TO_DEFAULT = """
+            UPDATE customer_addresses
+            SET
+              is_default = true,
+              version = version + 1,
+              updated_at = now()
+            WHERE customer_id = ?
+            AND address_id = ?
+            AND version = ?;
+            """;
+
     public static final String FIND_CUSTOMER_ADDRESS_BY_ID = """
             SELECT * FROM customer_addresses
             WHERE address_id = ?
