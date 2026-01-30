@@ -10,7 +10,7 @@ import java.util.UUID;
 public interface CustomerAddressRepository {
 
     // SQL CRUD Actions
-    public CustomerAddress insertNewAddress(DTOCustomerAddressNewAddress dto);
+    public CustomerAddress insertNewAddress(UUID customerId, DTOCustomerAddressNewAddress dto);
     public boolean updateExistingAddress(DTOCustomerAddressUpdateAddress dto, long addressId, UUID customerId, int expectedVersion);
     public boolean setNewDefaultAddress(UUID customerId, long addressId);
     public boolean deleteAddress(UUID customerId, long addressId, int expectedVersion);

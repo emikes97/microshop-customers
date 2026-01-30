@@ -31,11 +31,11 @@ public class JdbcCustomerAddressRepository implements CustomerAddressRepository 
     // == Public Methods ==
 
     @Override
-    public CustomerAddress insertNewAddress(DTOCustomerAddressNewAddress dto) {
+    public CustomerAddress insertNewAddress(UUID customerId, DTOCustomerAddressNewAddress dto) {
 
         CustomerAddress inserted = jdbc.queryForObject(CustomerAddressSql.INSERT_CUSTOMER_ADDRESS,
                 mapper,
-                dto.customerId(),
+                customerId,
                 dto.country(),
                 dto.city(),
                 dto.street(),
