@@ -37,7 +37,15 @@ public class CustomerFactory {
                 keepOldIfBlank(dto.phoneNumber(), customer.getPhoneNumber()),
                 keepOldIfBlank(dto.email(), customer.getEmail()),
                 keepOldIfBlank(dto.customerName(), customer.getCustomerName()),
-                keepOldIfBlank(dto.customerSurname(), customer.getCustomerSurname()));
+                keepOldIfBlank(dto.customerSurname(), customer.getCustomerSurname()),
+                customer.getSubscribedAt(),
+                customer.getSubscribedValidUntilAt(),
+                customer.getVersion(),
+                customer.getStatus(),
+                customer.getCreatedAt(),
+                customer.getUpdatedAt(),
+                customer.getPasswordChangedAt(),
+                customer.getDeletedAt());
     }
     
     private String keepOldIfBlank(String incoming, String current){

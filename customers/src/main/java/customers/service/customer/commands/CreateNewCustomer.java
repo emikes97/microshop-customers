@@ -27,6 +27,7 @@ public class CreateNewCustomer {
     public DTOCustomerProfileCreatedResponse handle(DTOCustomerNewProfile dto){
         Customer customerToSave = factory.create(dto);
         Customer savedCustomer = writer.insertNewUser(customerToSave);
+        // publish event to message broker
         return new DTOCustomerProfileCreatedResponse(savedCustomer.getCustomerId(), savedCustomer.getUsername(), savedCustomer.getCustomerName());
     }
 }
