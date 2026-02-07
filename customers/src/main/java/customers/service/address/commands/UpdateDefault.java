@@ -26,6 +26,7 @@ public class UpdateDefault {
 
     public void setNewDefault(UUID customerId, long addressId){
         writer.setDefaultToFalse(customerId);
-        writer.setNewDefaultAddress(customerId, addressId);
+        if(!writer.setNewDefaultAddress(customerId, addressId))
+            throw new IllegalStateException("Updating address " + addressId + " failed");
     }
 }

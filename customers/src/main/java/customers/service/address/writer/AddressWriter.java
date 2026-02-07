@@ -36,4 +36,8 @@ public class AddressWriter {
     public boolean setNewDefaultAddress(UUID customerId, long addressId){
         return repository.setNewDefault(customerId, addressId);
     }
+
+    public boolean deleteAddress(UUID customerId, long addressId, int expectedVersion){
+        return repository.deleteAddress(customerId, addressId, expectedVersion);
+    }
 }

@@ -4,9 +4,11 @@ import customers.domain.model.CustomerAddress;
 import customers.web.DTO.Requests.CustomerAddress.DTOCustomerAddressNewAddress;
 import customers.web.DTO.Requests.CustomerAddress.DTOCustomerAddressUpdateAddress;
 import customers.web.DTO.Responses.Address.DTONewAddressResponse;
+import org.springframework.stereotype.Component;
 
 import java.util.UUID;
 
+@Component
 public class AddressFactory {
 
     // == Public Methods ==

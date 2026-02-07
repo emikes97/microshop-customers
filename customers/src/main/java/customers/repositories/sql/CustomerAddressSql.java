@@ -35,8 +35,8 @@ public class CustomerAddressSql {
 
     public static final String DELETE_CUSTOMER_ADDRESS = """
             DELETE FROM customer_addresses
-            WHERE address_id = ?
-            AND customer_id = ?
+            WHERE customer_id = ?
+            AND address_id = ?
             And version = ?;
             """;
 
