@@ -25,7 +25,7 @@ public class DeleteAddress {
     // == Public Methods ==
 
     public void handle(UUID customerId, long addressId){
-        CustomerAddress addressToDelete = queries.getAddress(customerId, addressId);
+        CustomerAddress addressToDelete = queries.getAddressEnt(customerId, addressId);
         if(!writer.deleteAddress(customerId, addressId, addressToDelete.getVersion()))
             throw new IllegalStateException("Stale version: address changed by another request");
     }

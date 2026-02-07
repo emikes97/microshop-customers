@@ -22,11 +22,9 @@ public class CustomerFactory {
     }
 
     // == Public Methods ==
-
     public Customer create(DTOCustomerNewProfile dto){
 
         String hashedPassword = encoder.encode(dto.password());
-
         return new Customer(UUID.randomUUID(), dto.username(), hashedPassword, dto.phoneNumber(), dto.email(), dto.customerName(), dto.customerSurname());
     }
 

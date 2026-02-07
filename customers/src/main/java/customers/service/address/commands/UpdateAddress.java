@@ -29,7 +29,7 @@ public class UpdateAddress {
     // == Public Methods ==
     public void handle(UUID customerId, long addressId, DTOCustomerAddressUpdateAddress dto){
         if(noOperation(dto)) return;
-        CustomerAddress existingAddress = queries.getAddress(customerId, addressId);
+        CustomerAddress existingAddress = queries.getAddressEnt(customerId, addressId);
         CustomerAddress updatedAddress = factory.update(existingAddress, dto);
         if(!writer.update(updatedAddress, updatedAddress.getAddressId(), customerId, updatedAddress.getVersion()))
             throw new IllegalStateException("Stale version: customer was updated by another request");

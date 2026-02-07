@@ -57,7 +57,7 @@ public class JdbcCustomerAddressRepository implements CustomerAddressRepository 
                 customerId,
                 expectedVersion);
 
-        return row == 1;
+        return row > 0;
     }
 
     @Override
