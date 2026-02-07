@@ -6,9 +6,11 @@ import customers.service.address.queries.AddressQueries;
 import customers.service.address.writer.AddressWriter;
 import customers.web.DTO.Requests.CustomerAddress.DTOCustomerAddressUpdateAddress;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.UUID;
 
+@Component
 public class UpdateAddress {
 
     // == Fields ==
