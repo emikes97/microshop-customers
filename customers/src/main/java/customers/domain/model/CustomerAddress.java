@@ -37,6 +37,24 @@ public class CustomerAddress {
         this.updatedAt = updatedAt;
     }
 
+    public CustomerAddress(CustomerAddress address, String country, String city, String street, String postalCode){
+        this(address.getAddressId(), address.getCustomerId(), country, city, street, postalCode, address.isDefault, address.getVersion(),
+                address.getCreatedAt(), address.getUpdatedAt());
+    }
+
+    public CustomerAddress(UUID customerId, String country, String city, String street, String postalCode, boolean isDefault){
+        this.addressId = 0;
+        this.customerId = customerId;
+        this.country = country;
+        this.city = city;
+        this.street = street;
+        this.postalCode = postalCode;
+        this.isDefault = isDefault;
+        this.version = 0;
+        this.createdAt = null;
+        this.updatedAt = null;
+    }
+
     // == Public Methods ==
 
     @Override

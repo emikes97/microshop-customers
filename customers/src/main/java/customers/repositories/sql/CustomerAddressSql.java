@@ -15,7 +15,7 @@ public class CustomerAddressSql {
             updated_at
             )
             VALUES
-            (?,?,?,?,?,?,0,now(),now())
+            (?,?,?,?,?,false,0,now(),now())
             RETURNING *
             """;
 
@@ -78,8 +78,7 @@ public class CustomerAddressSql {
               version = version + 1,
               updated_at = now()
             WHERE customer_id = ?
-            AND address_id = ?
-            AND version = ?;
+            AND address_id = ?;
             """;
 
     public static final String FIND_CUSTOMER_ADDRESS_BY_ID = """

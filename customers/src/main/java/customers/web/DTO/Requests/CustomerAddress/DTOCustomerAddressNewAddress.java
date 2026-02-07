@@ -7,7 +7,6 @@ import jakarta.validation.constraints.Size;
 import java.util.UUID;
 
 public record DTOCustomerAddressNewAddress(
-        @NotNull UUID customerId,
         @Size(max = 150) @NotNull @NotBlank String country,
         @Size(max = 150) @NotNull @NotBlank String city,
         @Size(max = 150) @NotNull @NotBlank String street,

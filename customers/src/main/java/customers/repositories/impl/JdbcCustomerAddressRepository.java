@@ -4,7 +4,6 @@ import customers.domain.model.CustomerAddress;
 import customers.repositories.CustomerAddressRepository;
 import customers.repositories.sql.CustomerAddressSql;
 import customers.web.DTO.PageResult.PageResult;
-import customers.web.DTO.Requests.CustomerAddress.DTOCustomerAddressNewAddress;
 import customers.web.DTO.Requests.CustomerAddress.DTOCustomerAddressUpdateAddress;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -31,30 +30,29 @@ public class JdbcCustomerAddressRepository implements CustomerAddressRepository 
     // == Public Methods ==
 
     @Override
-    public CustomerAddress insertNewAddress(UUID customerId, DTOCustomerAddressNewAddress dto) {
+    public CustomerAddress insertNewAddress(CustomerAddress address) {
 
         CustomerAddress inserted = jdbc.queryForObject(CustomerAddressSql.INSERT_CUSTOMER_ADDRESS,
                 mapper,
-                customerId,
-                dto.country(),
-                dto.city(),
-                dto.street(),
-                dto.postalCode(),
-                dto.isDefault());
+                address.getCustomerId(),
+                address.getCountry(),
+                address.getCity(),
+                address.getStreet(),
+                address.getPostalCode());
 
         if(inserted == null)
-            throw new IllegalStateException("Insert returned null for customerId: " + dto.customerId());
+            throw new IllegalStateException("Insert returned null for customerId: " + address.getCustomerId());
 
         return inserted;
     }
 
     @Override
-    public boolean updateExistingAddress(DTOCustomerAddressUpdateAddress dto, long addressId, UUID customerId, int expectedVersion) {
+    public boolean updateExistingAddress(CustomerAddress address, long addressId, UUID customerId, int expectedVersion) {
         int row = jdbc.update(CustomerAddressSql.UPDATE_CUSTOMER_ADDRESS,
-                dto.country(),
-                dto.city(),
-                dto.street(),
-                dto.postalCode(),
+                address.getCountry(),
+                address.getCity(),
+                address.getStreet(),
+                address.getPostalCode(),
                 addressId,
                 customerId,
                 expectedVersion);
@@ -105,9 +103,9 @@ public class JdbcCustomerAddressRepository implements CustomerAddressRepository 
     }
 
     @Override
-    public boolean setNewDefault(UUID customerId, long addressId, int expectedVersion) {
+    public boolean setNewDefault(UUID customerId, long addressId) {
 
-        int row = jdbc.update(CustomerAddressSql.SET_ADDRESS_TO_DEFAULT, customerId, addressId, expectedVersion);
+        int row = jdbc.update(CustomerAddressSql.SET_ADDRESS_TO_DEFAULT, customerId, addressId);
 
         return row == 1;
     }
