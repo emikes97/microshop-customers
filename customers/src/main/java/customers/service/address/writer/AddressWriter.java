@@ -1,7 +1,7 @@
 package customers.service.address.writer;
 
 import customers.domain.model.CustomerAddress;
-import customers.repositories.impl.JdbcCustomerAddressRepository;
+import customers.repositories.impl.JdbcAddressRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -11,11 +11,11 @@ import java.util.UUID;
 public class AddressWriter {
 
     // == Fields ==
-    private final JdbcCustomerAddressRepository repository;
+    private final JdbcAddressRepository repository;
 
     // == Constructors ==
     @Autowired
-    public AddressWriter(JdbcCustomerAddressRepository repository) {
+    public AddressWriter(JdbcAddressRepository repository) {
         this.repository = repository;
     }
 

@@ -2,9 +2,8 @@ package customers.repositories.impl;
 
 import customers.domain.model.CustomerAddress;
 import customers.repositories.CustomerAddressRepository;
-import customers.repositories.sql.CustomerAddressSql;
+import customers.repositories.sql.AddressSql;
 import customers.web.DTO.PageResult.PageResult;
-import customers.web.DTO.Requests.CustomerAddress.DTOCustomerAddressUpdateAddress;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -14,7 +13,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Repository
-public class JdbcCustomerAddressRepository implements CustomerAddressRepository {
+public class JdbcAddressRepository implements CustomerAddressRepository {
 
     // == Fields ==
     private final JdbcTemplate jdbc;
@@ -22,7 +21,7 @@ public class JdbcCustomerAddressRepository implements CustomerAddressRepository 
 
     // == Constructors ==
     @Autowired
-    public JdbcCustomerAddressRepository(JdbcTemplate jdbc, RowMapper<CustomerAddress> mapper) {
+    public JdbcAddressRepository(JdbcTemplate jdbc, RowMapper<CustomerAddress> mapper) {
         this.jdbc = jdbc;
         this.mapper = mapper;
     }
@@ -32,7 +31,7 @@ public class JdbcCustomerAddressRepository implements CustomerAddressRepository 
     @Override
     public CustomerAddress insertNewAddress(CustomerAddress address) {
 
-        CustomerAddress inserted = jdbc.queryForObject(CustomerAddressSql.INSERT_CUSTOMER_ADDRESS,
+        CustomerAddress inserted = jdbc.queryForObject(AddressSql.INSERT_CUSTOMER_ADDRESS,
                 mapper,
                 address.getCustomerId(),
                 address.getCountry(),
@@ -48,7 +47,7 @@ public class JdbcCustomerAddressRepository implements CustomerAddressRepository 
 
     @Override
     public boolean updateExistingAddress(CustomerAddress address, long addressId, UUID customerId, int expectedVersion) {
-        int row = jdbc.update(CustomerAddressSql.UPDATE_CUSTOMER_ADDRESS,
+        int row = jdbc.update(AddressSql.UPDATE_CUSTOMER_ADDRESS,
                 address.getCountry(),
                 address.getCity(),
                 address.getStreet(),
@@ -62,7 +61,7 @@ public class JdbcCustomerAddressRepository implements CustomerAddressRepository 
 
     @Override
     public boolean setNewDefaultAddress(UUID customerId, long addressId) {
-        int row = jdbc.update(CustomerAddressSql.SET_CUSTOMER_ADDRESS_TO_DEFAULT,
+        int row = jdbc.update(AddressSql.SET_CUSTOMER_ADDRESS_TO_DEFAULT,
                 addressId,
                 addressId,
                 addressId,
@@ -74,19 +73,19 @@ public class JdbcCustomerAddressRepository implements CustomerAddressRepository 
 
     @Override
     public boolean deleteAddress(UUID customerId, long addressId, int expectedVersion) {
-        int row = jdbc.update(CustomerAddressSql.DELETE_CUSTOMER_ADDRESS, customerId, addressId, expectedVersion);
+        int row = jdbc.update(AddressSql.DELETE_CUSTOMER_ADDRESS, customerId, addressId, expectedVersion);
         return row == 1;
     }
 
     @Override
     public CustomerAddress getCustomerAddress(UUID customerId, long addressId) {
-        return jdbc.queryForObject(CustomerAddressSql.FIND_CUSTOMER_ADDRESS_BY_ID, mapper, addressId, customerId);
+        return jdbc.queryForObject(AddressSql.FIND_CUSTOMER_ADDRESS_BY_ID, mapper, addressId, customerId);
     }
 
     @Override
     public PageResult<CustomerAddress> getPagedCustomerAddresses(UUID customerId, int limit, int offset) {
-        List<CustomerAddress> content = jdbc.query(CustomerAddressSql.GET_ALL_CUSTOMER_ADDRESSES, mapper, customerId, limit, offset);
-        Long total = jdbc.queryForObject(CustomerAddressSql.GET_COUNT_OF_ALL_CUSTOMER_ADDRESSES, Long.class, customerId);
+        List<CustomerAddress> content = jdbc.query(AddressSql.GET_ALL_CUSTOMER_ADDRESSES, mapper, customerId, limit, offset);
+        Long total = jdbc.queryForObject(AddressSql.GET_COUNT_OF_ALL_CUSTOMER_ADDRESSES, Long.class, customerId);
 
         long totalElements = (total == null) ? 0L : total;
         int page = (limit > 0) ? (offset / limit) : 0;
@@ -97,7 +96,7 @@ public class JdbcCustomerAddressRepository implements CustomerAddressRepository 
     @Override
     public boolean setDefaultToFalse(UUID customerId) {
 
-        int row = jdbc.update(CustomerAddressSql.SET_DEFAULT_ADDRESS_TO_FALSE, customerId);
+        int row = jdbc.update(AddressSql.SET_DEFAULT_ADDRESS_TO_FALSE, customerId);
 
         return row == 1;
     }
@@ -105,7 +104,7 @@ public class JdbcCustomerAddressRepository implements CustomerAddressRepository 
     @Override
     public boolean setNewDefault(UUID customerId, long addressId) {
 
-        int row = jdbc.update(CustomerAddressSql.SET_ADDRESS_TO_DEFAULT, customerId, addressId);
+        int row = jdbc.update(AddressSql.SET_ADDRESS_TO_DEFAULT, customerId, addressId);
 
         return row == 1;
     }

@@ -31,12 +31,38 @@ public class CustomerController {
     }
 
     // == Public Methods / Exposed Endpoints ==
+
+    /// == Post == ///
+    /*
+        curl -i -X POST "http://localhost:8081/microshop/v1/customers" \
+      -H "Content-Type: application/json" \
+      -d '{
+        "username": "mike",
+        "email": "mike@example.com",
+        "phoneNumber": "6912345678",
+        "firstName": "Mike",
+        "lastName": "Emmanouil",
+        "password": "StrongPassword123!"
+      }'
+     */
     @PostMapping
     public ResponseEntity<DTOCustomerProfileCreatedResponse> createNewCustomer(@RequestBody @Valid DTOCustomerNewProfile dto){
         DTOCustomerProfileCreatedResponse response = customerCommandHandler.createCustomer(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
+    /// == Put == || == Patch == ///
+    /*
+        curl -i -X PATCH "http://localhost:8081/microshop/v1/customers/a4e8e26c-32eb-42ed-8a59-1bdeaec86818" \
+      -H "Content-Type: application/json" \
+      -d '{
+        "username": "mike_new",
+        "email": "mike_new@example.com",
+        "phoneNumber": "6912345679",
+        "firstName": "Mike",
+        "lastName": "Emmanouil"
+      }'
+     */
     @PatchMapping("/{customerId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     // Requires Authorization
@@ -44,6 +70,14 @@ public class CustomerController {
         customerCommandHandler.updateCustomer(customerId, dto);
     }
 
+    /*
+        curl -i -X PATCH "http://localhost:8081/microshop/v1/customers/a4e8e26c-32eb-42ed-8a59-1bdeaec86818/credentials" \
+      -H "Content-Type: application/json" \
+      -d '{
+        "currentPassword": "StrongPassword123!",
+        "newPassword": "EvenStrongerPassword456!"
+      }'
+     */
     @PatchMapping("/{customerId}/credentials")
     @ResponseStatus(HttpStatus.ACCEPTED)
     // Requires Authorization
@@ -51,6 +85,12 @@ public class CustomerController {
         customerCommandHandler.updateCredentials(customerId, dto);
     }
 
+    /// == Get == ///
+
+    /// curl -i -X GET "http://localhost:8081/microshop/v1/customers/search?customerId=a4e8e26c-32eb-42ed-8a59-1bdeaec86818"
+    /// curl -i -X GET "http://localhost:8081/microshop/v1/customers/search?email=mike@example.com"
+    /// curl -i -X GET "http://localhost:8081/microshop/v1/customers/search?phoneNumber=6912345678"
+    /// curl -i -X GET "http://localhost:8081/microshop/v1/customers/search?username=mike"
     @GetMapping("/search")
     // Requires Authorization
     public DTOCustomerProfileResponse searchCustomerProfile(@RequestParam(required = false) UUID customerId,
@@ -60,6 +100,7 @@ public class CustomerController {
         return customerQueryHandler.searchCustomer(customerId, email, phoneNumber, username);
     }
 
+    /// curl -i -X GET "http://localhost:8081/microshop/v1/customers/search?username=mike"
     @GetMapping("/{customerId}")
     public DTOCustomerProfileResponse getCustomerById(@PathVariable UUID customerId){
         return customerQueryHandler.findCustomer(customerId);

@@ -10,7 +10,7 @@ import java.time.OffsetDateTime;
 import java.util.UUID;
 
 @Component
-public class CustomerAddressMapper implements RowMapper<CustomerAddress> {
+public class AddressMapper implements RowMapper<CustomerAddress> {
 
     @Override
     public CustomerAddress mapRow(ResultSet rs, int rowNum) throws SQLException {

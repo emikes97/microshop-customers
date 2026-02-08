@@ -1,6 +1,10 @@
 package customers.repositories.sql;
 
-public class CustomerAddressSql {
+public final class AddressSql {
+
+    private AddressSql(){}
+
+    // == Public Static Queries for JdbcAddressRepository
 
     public static final String INSERT_CUSTOMER_ADDRESS = """
             INSERT INTO customer_addresses (
