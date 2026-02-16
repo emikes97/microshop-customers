@@ -42,6 +42,11 @@ public class CustomerPaymentMethod {
         this.updatedAt = updatedAt;
     }
 
+    public CustomerPaymentMethod(UUID customerPaymentId, UUID customerId, String provider, String brand,
+                                 String paymentRefToken, short expYear, short expMonth, boolean isDefault){
+        this(customerPaymentId, customerId, provider, brand, paymentRefToken, expYear, expMonth, TokenStatus.PENDING, isDefault, 0, null, null);
+    }
+
     // == Public Methods ==
 
     @Override

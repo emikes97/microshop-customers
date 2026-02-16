@@ -126,7 +126,7 @@ public class JdbcPaymentMethodRepository implements PaymentMethodRepository {
         int rows = jdbc.update(PaymentMethodSql.REMOVE_DEFAULT_FROM_CUSTOMER,
                 customerId);
 
-        return rows == 1;
+        return rows <= 1;
     }
 
     @Override
