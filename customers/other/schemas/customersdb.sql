@@ -70,7 +70,7 @@ CREATE TABLE customer_payment_methods (
     customer_id          UUID NOT NULL REFERENCES customers(customer_id) ON DELETE CASCADE,
     provider             VARCHAR(50) NOT NULL,
     brand                VARCHAR(25),
-    payment_ref_token    TEXT,
+    payment_ref_token    TEXT NOT NULL,
     exp_year             SMALLINT NOT NULL,
     exp_month            SMALLINT NOT NULL,
     status               token_status NOT NULL DEFAULT 'PENDING',

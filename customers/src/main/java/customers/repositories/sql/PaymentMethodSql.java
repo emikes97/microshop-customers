@@ -14,14 +14,17 @@ public final class PaymentMethodSql {
             brand,
             payment_ref_token,
             exp_year,
-            exp_month,
-            version,
-            created_at,
-            updated_at
+            exp_month
             )
             VALUES
-            (?,?,?,?,?,?,?,0,now(),now())
+            (?,?,?,?,?,?,?)
             RETURNING *
+            """;
+
+    public static final String GET_ALL_PAGED_PAYMENT_METHODS_FOR_CUSTOMER = """
+            SELECT * FROM customer_payment_methods
+            WHERE customer_id = ?
+            ORDER BY created_at DESC LIMIT ? OFFSET ?;
             """;
 
     public static final String REPLACE_EXISTING_PAYMENT_METHOD = """
@@ -67,5 +70,35 @@ public final class PaymentMethodSql {
             WHERE customer_id = ?
             AND customer_payment_id = ?
             AND version = ?;
+            """;
+
+    public static final String DELETE_PAYMENT_METHOD = """
+            DELETE FROM customer_payment_methods
+            WHERE customer_id = ?
+            AND customer_payment_id = ?
+            AND version = ?
+            """;
+
+    public static final String REMOVE_DEFAULT_FROM_CUSTOMER = """
+            UPDATE customer_payment_methods
+            SET
+            is_default = false,
+            updated_at = now()
+            WHERE customer_id = ?
+            AND is_default = true
+            """;
+
+    public static final String SET_NEW_DEFAULT_FROM_CUSTOMER = """
+            UPDATE customer_payment_methods
+            SET
+            is_default = true,
+            updated_at = now()
+            WHERE customer_id = ?
+            AND customer_payment_id = ?
+            """;
+
+    public static final String GET_COUNT_OF_ALL_CUSTOMER_PAYMENT_METHODS = """
+            SELECT COUNT(*) FROM customer_payment_methods
+            WHERE customer_id = ?;
             """;
 }

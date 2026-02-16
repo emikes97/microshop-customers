@@ -69,7 +69,6 @@ public final class AddressSql {
             UPDATE customer_addresses
             SET
               is_default = false,
-              version = version + 1,
               updated_at = now()
             WHERE customer_id = ?
             AND is_default = true
@@ -79,7 +78,6 @@ public final class AddressSql {
             UPDATE customer_addresses
             SET
               is_default = true,
-              version = version + 1,
               updated_at = now()
             WHERE customer_id = ?
             AND address_id = ?;
